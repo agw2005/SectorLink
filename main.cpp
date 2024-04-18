@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Eigen/Dense>
 
-void gaussJordan(Eigen::MatrixXd& matrix) {
+void RREF(Eigen::MatrixXd& matrix) {
     int lead = 0;
     int rowCount = matrix.rows();
     int colCount = matrix.cols();
@@ -87,6 +87,6 @@ int main() {
 
     std::cout<<"After Identity Matrix:\n"<<resultMatrix<<std::endl;
 
-    gaussJordan(resultMatrix);
+    RREF(resultMatrix);
     std::cout<<"Resulting Matrix:\n"<<resultMatrix<<std::endl;
 }
