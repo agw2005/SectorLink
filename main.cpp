@@ -77,14 +77,27 @@ int main() {
 
     resultMatrix = identity-initialMatrix;
 
-    RREF(resultMatrix);
+    //std::cout<<std::endl;
+    //
+    //std::cout<<initialMatrix;
+    //std::cout<<std::endl;
+    //
+    //std::cout<<resultMatrix;
+    //std::cout<<std::endl;
+    //
+    //RREF(resultMatrix);
+    //
+    //std::cout<<resultMatrix;
+    //std::cout<<std::endl;
 
-    std::cout<<std::endl;
+    int scalar = -1;
+    if(sectorPopulation > 4){scalar*=-1;}
+
     for(int i = 0 ; i < sectorPopulation-1 ; i++) {
         for(int ii = 0 ; ii < sectorPopulation ; ii++) {
             if(resultMatrix(ii, i) != 0){
                 std::cout<<resultMatrix(i,ii)<<" product from sector "<<sectors[ii]<<" is equal to "<<
-                -1*resultMatrix(i, sectorPopulation-1)<<" product from sector "<<sectors[sectorPopulation-1]
+                scalar*resultMatrix(i, sectorPopulation-1)<<" product from sector "<<sectors[sectorPopulation-1]
                 <<std::endl;
                 break;
             }
