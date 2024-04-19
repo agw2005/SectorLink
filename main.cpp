@@ -1,12 +1,13 @@
 #include <iostream>
 #include <Eigen/Dense>
+#include <vector>
 
 void RREF(Eigen::MatrixXd& matrix) {
     int lead = 0;
     int rowCount = matrix.rows();
     int colCount = matrix.cols();
 
-    for (int r = 0; r < rowCount; ++r) {
+    for(int r = 0; r < rowCount; ++r){
         if (colCount <= lead)
             return;
 
@@ -54,9 +55,6 @@ int main() {
     identity = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>::Identity(sectorPopulation, sectorPopulation)*100;
 
     Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> resultMatrix(sectorPopulation, sectorPopulation);
-    //Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> eachSectorValue(sectorPopulation, sectorPopulation);
-    //Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> zeroes(sectorPopulation, 1);
-    //zeroes.setZero();
 
     for(int i = 0 ; i < sectorPopulation ; i++){
         std::cout<<"What is the name of sector "<<i+1<<" ?\n";
@@ -66,8 +64,8 @@ int main() {
 
     cols = 0;
     rows = 0;
-    for(auto& s : sectors){
-        for(auto& ss : sectors){
+    for(std::string s : sectors){
+        for(std::string ss : sectors){
             std::cout<<"What is the output from "<<s<<" to "<<ss<<" ? (in %)\n";
             std::cin>>tempOutput;
             initialMatrix(rows,cols) = tempOutput;
@@ -79,14 +77,17 @@ int main() {
 
     resultMatrix = identity-initialMatrix;
 
-    // TODO: HOW TO DO RREF
+    RREF(resultMatrix);
 
     std::cout<<std::endl;
-
-    std::cout<<"Initial Matrix:\n"<<initialMatrix<<std::endl;
-
-    std::cout<<"After Identity Matrix:\n"<<resultMatrix<<std::endl;
-
-    RREF(resultMatrix);
-    std::cout<<"Resulting Matrix:\n"<<resultMatrix<<std::endl;
+    for(int i = 0 ; i < sectorPopulation-1 ; i++) {
+        for(int ii = 0 ; ii < sectorPopulation ; ii++) {
+            if(resultMatrix(ii, i) != 0){
+                std::cout<<resultMatrix(i,ii)<<" product from sector "<<sectors[ii]<<" is equal to "<<
+                -1*resultMatrix(i, sectorPopulation-1)<<" product from sector "<<sectors[sectorPopulation-1]
+                <<std::endl;
+                break;
+            }
+        }
+    }
 }
