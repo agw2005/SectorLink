@@ -77,20 +77,16 @@ int main() {
 
     resultMatrix = identity-initialMatrix;
 
-    RREF(resultMatrix);
+    std::cout<<std::endl;
 
-    //std::cout<<std::endl;
-    //
-    //std::cout<<initialMatrix;
-    //std::cout<<std::endl;
-    //
-    //std::cout<<resultMatrix;
-    //std::cout<<std::endl;
-    //
-    //RREF(resultMatrix);
-    //
-    //std::cout<<resultMatrix;
-    //std::cout<<std::endl;
+    std::cout<<initialMatrix;
+    std::cout<<std::endl;
+
+    std::cout<<resultMatrix;
+    std::cout<<std::endl;
+
+    std::cout<<resultMatrix;
+    std::cout<<std::endl;
 
     int scalar = -1;
     if(sectorPopulation > 4){scalar*=-1;}
