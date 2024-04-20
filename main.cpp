@@ -82,8 +82,7 @@ int main() {
     std::cout<<initialMatrix<<std::endl;
     std::cout<<std::endl;
 
-    std::cout<<resultMatrix<<std::endl;
-    std::cout<<std::endl;
+    RREF(resultMatrix);
 
     std::cout<<resultMatrix<<std::endl;
     std::cout<<std::endl;
@@ -93,7 +92,8 @@ int main() {
 
     for(int i = 0 ; i < sectorPopulation-1 ; i++) {
         for(int ii = 0 ; ii < sectorPopulation ; ii++) {
-            if(resultMatrix(i, ii) == 0){
+            if(resultMatrix(i, ii) == 1){
+                std::cout<<"i = "<<i<<" , ii = "<<ii<<std::endl;
                 std::cout<<resultMatrix(i,ii)<<" product from sector "<<sectors[ii]<<" is equal to "<<
                          scalar*resultMatrix(i, sectorPopulation-1)<<" product from sector "<<sectors[sectorPopulation-1]
                          <<std::endl;
