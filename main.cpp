@@ -77,6 +77,8 @@ int main() {
 
     resultMatrix = identity-initialMatrix;
 
+    RREF(resultMatrix);
+
     //std::cout<<std::endl;
     //
     //std::cout<<initialMatrix;
