@@ -97,10 +97,10 @@ int main() {
 
     for(int i = 0 ; i < sectorPopulation-1 ; i++) {
         for(int ii = 0 ; ii < sectorPopulation ; ii++) {
-            if(resultMatrix(ii, i) != 0){
+            if(resultMatrix(i, ii) == 0){
                 std::cout<<resultMatrix(i,ii)<<" product from sector "<<sectors[ii]<<" is equal to "<<
-                scalar*resultMatrix(i, sectorPopulation-1)<<" product from sector "<<sectors[sectorPopulation-1]
-                <<std::endl;
+                         scalar*resultMatrix(i, sectorPopulation-1)<<" product from sector "<<sectors[sectorPopulation-1]
+                         <<std::endl;
                 break;
             }
         }
