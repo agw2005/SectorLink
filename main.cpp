@@ -79,13 +79,13 @@ int main() {
 
     std::cout<<std::endl;
 
-    std::cout<<initialMatrix;
+    std::cout<<initialMatrix<<std::endl;
     std::cout<<std::endl;
 
-    std::cout<<resultMatrix;
+    std::cout<<resultMatrix<<std::endl;
     std::cout<<std::endl;
 
-    std::cout<<resultMatrix;
+    std::cout<<resultMatrix<<std::endl;
     std::cout<<std::endl;
 
     int scalar = -1;
