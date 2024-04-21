@@ -2,42 +2,12 @@
 #include <Eigen/Dense>
 #include <vector>
 
-void RREF(Eigen::MatrixXd& matrix) {
-    int lead = 0;
-    long long rowCount = matrix.rows();
-    long long colCount = matrix.cols();
+void scaleRow(Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>& matrix, int row, double scalar) {
+    matrix.row(row) *= scalar;
+}
 
-    for(int r = 0; r < rowCount; ++r){
-        if (colCount <= lead)
-            return;
-
-        int i = r;
-
-        while (matrix(i, lead) == 0) {
-            ++i;
-            if (rowCount == i) {
-                i = r;
-                ++lead;
-                if (colCount == lead)
-                    return;
-            }
-        }
-
-        if (i != r)
-            matrix.row(i).swap(matrix.row(r));
-
-        double lv = matrix(r, lead);
-        if (lv != 0)
-            matrix.row(r) /= lv;
-
-        for (i = 0; i < rowCount; ++i) {
-            if (i != r) {
-                double multiplier = matrix(i, lead);
-                matrix.row(i) -= multiplier * matrix.row(r);
-            }
-        }
-        ++lead;
-    }
+void addMultipleOfRowToRow(Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>& matrix, int firstRow, int secondRow, double firstRowMultiplier) {
+    matrix.row(secondRow) += firstRowMultiplier * matrix.row(firstRow);
 }
 
 int main() {
@@ -82,20 +52,43 @@ int main() {
     std::cout<<initialMatrix<<std::endl;
     std::cout<<std::endl;
 
-    RREF(resultMatrix);
+    int matrixCubic = sectorPopulation;
+
+    //Turn each value in the matrix into double
+    for(int i = 0 ; i < matrixCubic ; i++){
+        for(int ii = 0 ; ii < matrixCubic ; ii++){
+            resultMatrix(i,ii)*=1.0;
+        }
+    }
+
+    //matrix(1,0) = baris 2 kolom 1
+
+    int leadingColumn = 0;
+    int leadingRow = 0;
+
+    for(int j = 1; j < matrixCubic; j++){
+        if(resultMatrix(leadingRow,leadingColumn) != 1){
+            scaleRow(resultMatrix,leadingRow,1.0/resultMatrix(leadingRow,leadingColumn));
+        }
+
+        for(int i = 0 ; i < matrixCubic ; i++){
+            if(i != leadingRow) {
+                addMultipleOfRowToRow(resultMatrix, leadingRow, i, -1 * resultMatrix(i, leadingColumn));
+            }
+        }
+        leadingColumn++;
+        leadingRow++;
+    }
 
     std::cout<<resultMatrix<<std::endl;
     std::cout<<std::endl;
-
-    int scalar = -1;
-    if(sectorPopulation > 4){scalar*=-1;}
 
     for(int i = 0 ; i < sectorPopulation-1 ; i++) {
         for(int ii = 0 ; ii < sectorPopulation ; ii++) {
             if(resultMatrix(i, ii) == 1){
                 //std::cout<<"i = "<<i<<" , ii = "<<ii<<std::endl;
                 std::cout<<resultMatrix(i,ii)<<" product from sector "<<sectors[ii]<<" is equal to "<<
-                         scalar*resultMatrix(i, sectorPopulation-1)<<" product from sector "<<sectors[sectorPopulation-1]
+                         -1.0*resultMatrix(i, sectorPopulation-1)<<" product from sector "<<sectors[sectorPopulation-1]
                          <<std::endl;
                 break;
             }
