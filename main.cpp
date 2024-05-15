@@ -26,12 +26,14 @@ int main() {
 
     Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> resultMatrix(sectorPopulation, sectorPopulation);
 
+    //Input the matrix order
     for(int i = 0 ; i < sectorPopulation ; i++){
         std::cout<<"What is the name of sector "<<i+1<<" ?\n";
         std::cin>>tempName;
         sectors.push_back(tempName);
     }
 
+    //Input the matrix elements
     cols = 0;
     rows = 0;
     for(std::string& s : sectors){
@@ -47,31 +49,24 @@ int main() {
 
     resultMatrix = identity-initialMatrix;
 
-    std::cout<<std::endl;
-
-    std::cout<<initialMatrix<<std::endl;
-    std::cout<<std::endl;
-
-    int matrixCubic = sectorPopulation;
-
     //Turn each value in the matrix into double
-    for(int i = 0 ; i < matrixCubic ; i++){
-        for(int ii = 0 ; ii < matrixCubic ; ii++){
+    for(int i = 0 ; i < sectorPopulation ; i++){
+        for(int ii = 0 ; ii < sectorPopulation ; ii++){
             resultMatrix(i,ii)*=1.0;
         }
     }
 
-    //matrix(1,0) = baris 2 kolom 1
+    //matrix(1,0) = row 2 column 1
 
+    //Gauss-Jordan
     int leadingColumn = 0;
     int leadingRow = 0;
-
-    for(int j = 1; j < matrixCubic; j++){
+    for(int j = 1; j < sectorPopulation; j++){
         if(resultMatrix(leadingRow,leadingColumn) != 1){
             scaleRow(resultMatrix,leadingRow,1.0/resultMatrix(leadingRow,leadingColumn));
         }
 
-        for(int i = 0 ; i < matrixCubic ; i++){
+        for(int i = 0 ; i < sectorPopulation ; i++){
             if(i != leadingRow) {
                 addMultipleOfRowToRow(resultMatrix, leadingRow, i, -1 * resultMatrix(i, leadingColumn));
             }
@@ -80,13 +75,9 @@ int main() {
         leadingRow++;
     }
 
-    std::cout<<resultMatrix<<std::endl;
-    std::cout<<std::endl;
-
     for(int i = 0 ; i < sectorPopulation-1 ; i++) {
         for(int ii = 0 ; ii < sectorPopulation ; ii++) {
             if(resultMatrix(i, ii) == 1){
-                //std::cout<<"i = "<<i<<" , ii = "<<ii<<std::endl;
                 std::cout<<resultMatrix(i,ii)<<" product from sector "<<sectors[ii]<<" is equal to "<<
                          -1.0*resultMatrix(i, sectorPopulation-1)<<" product from sector "<<sectors[sectorPopulation-1]
                          <<std::endl;
