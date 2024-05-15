@@ -16,6 +16,7 @@ int main() {
     std::string tempName;
     std::vector<std::string> sectors;
 
+    //Input the matrix order (n x n)
     std::cout<<"How many sectors are there?\n";
     std::cin>>sectorPopulation;
 
@@ -26,7 +27,7 @@ int main() {
 
     Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> resultMatrix(sectorPopulation, sectorPopulation);
 
-    //Input the matrix order
+    //Input the name of the sectors
     for(int i = 0 ; i < sectorPopulation ; i++){
         std::cout<<"What is the name of sector "<<i+1<<" ?\n";
         std::cin>>tempName;
